@@ -60,8 +60,8 @@ export default class UserController {
 
 	public static async loginUser(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
-			const { Email, Password } = req.body
-			const user: IUser | null = await User.findOne({ Email })
+			const { ID, Password } = req.body
+			const user: IUser | null = await User.findOne({ ID })
 			if (!user) {
 				return res.status(404).json({ Email: "Email not found" })
 			}
@@ -73,7 +73,7 @@ export default class UserController {
 			const userObj: any = user.toObject()
 			delete userObj.Password
 
-			const token: string = await user.GenerateToken()
+			const token: string = user.GenerateToken()
 			res.cookie('token', token, { httpOnly: true })
 			return res.status(200).json({ message: "Login successful", user: userObj, token })
 
@@ -103,13 +103,12 @@ export default class UserController {
 	public static async updateUser(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
 			const { id } = req.params
-			const { Username, Email, Password } = req.body
+			const { Username, Password } = req.body
 
 
 			const user: IUser | null = await User.findById(id)
 			if (user) {
 				if (Username) user.ID = Username
-				if (Email) user.Email = Email
 				if (Password) user.Password = Password
 
 				await user.save()

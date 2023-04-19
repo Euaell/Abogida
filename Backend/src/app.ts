@@ -6,7 +6,6 @@ import cookieParser from "cookie-parser"
 
 import routes from "./routes"
 
-
 const app = express()
 
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
@@ -21,6 +20,11 @@ app.use(cors({
 
 app.use("/api/v1/users", routes.UserRoute)
 app.use("/api/v1/unverified-users", routes.UnverifiedUserRoute)
+app.use("/api/v1/classes", routes.ClassRoute)
+app.use("/api/v1/admin", routes.AdminRoute)
+app.use("/api/v1/student", routes.StudentRoute)
+app.use("/api/v1/subject", routes.SubjectRoute)
+app.use("/api/v1/teacher", routes.TeacherRoute)
 
 app.get("/api/v1", (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({ message: "Chatty Chat!" })
