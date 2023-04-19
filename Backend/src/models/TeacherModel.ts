@@ -9,14 +9,12 @@ interface TeacherModel extends Model<ITeacher> {
 }
 
 const TeacherSchema : Schema <ITeacher> = new Schema<ITeacher>({
-
     Uid : {
         type : Schema.Types.ObjectId,
         required : true,
         ref : "User",
         unique : true
     }
-
 })
 
 export default model<ITeacher, TeacherModel>("Teacher",TeacherSchema);

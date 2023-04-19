@@ -4,7 +4,7 @@ import Authenticate from "../middlewares/Authenticate";
 
 const router = Router()
 
-router.get("/", Authenticate.authenticate, ClassController.GetClasses)
+router.get("/", ClassController.GetClasses)
 router.post("/", Authenticate.authenticate, Authenticate.authorize, ClassController.CreateClass)
 router.get("/:id", Authenticate.authenticate, ClassController.GetClass)
 router.put("/:id", Authenticate.authenticate, Authenticate.authorize, ClassController.UpdateClass)

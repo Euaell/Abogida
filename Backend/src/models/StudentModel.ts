@@ -1,40 +1,32 @@
-import { Schema, model, Document } from "mongoose";
-export enum GenderEnum {
-    Male = "male",
-    Female = "female"
-}
-
+import {Schema, model, Document, Model} from "mongoose";
 
 export interface IStudent extends Document {
+    Class : Schema.Types.ObjectId,
+    UserID : Schema.Types.ObjectId
+}
 
-    Section : String,
-    Year : number,
-    Uid : Schema.Types.ObjectId
+interface StudentModel extends Model<IStudent> {
 
 }
 
-const StudentSchema : Schema <IStudent> = new Schema<IStudent>({
-
-    Section : {
-        type : String,
-        required : true
+const StudentSchema : Schema <IStudent> = new Schema<IStudent>(
+    {
+        Class : {
+            type : Schema.Types.ObjectId,
+            required : true,
+            ref : "Class"
+        },
+        UserID : {
+            type : Schema.Types.ObjectId,
+            required : true,
+            ref : "User",
+            unique : true
+        }
     },
-
-    Year : {
-
-        type : Number,
-        required : true
-    },
-
-    Uid : {
-        type : Schema.Types.ObjectId,
-        required : true,
-        ref : "User",
-        unique: true
-    }
-
+    {
+        timestamps : true
     }
 )
 
-export default model<IStudent>("Student",StudentSchema)
+export default model<IStudent, StudentModel>("Student",StudentSchema)
 

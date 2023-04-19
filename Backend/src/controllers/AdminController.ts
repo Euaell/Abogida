@@ -7,7 +7,7 @@ import StudentModel, {IStudent} from "../models/StudentModel";
 export class AdminController {
 	public static async GetAdmins(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
-			const Admins: IAdmin[] = await AdminModel.find()
+			const Admins: IAdmin[] = await AdminModel.find().populate("UserID", "-Password")
 			return res.status(200).json({ Admins })
 		} catch (error) {
 			next(error)
@@ -32,7 +32,6 @@ export class AdminController {
 	public static async UpdateAdmin(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
 			const { id } = req.params
-			const { user } = req.body
 
 			const admin: IAdmin | null = await AdminModel.findById(id)
 			if (admin) {
@@ -102,7 +101,7 @@ export class AdminController {
 			const newUser: IUser = await UserModel.create({ ID, Name, Password, role: roleEnum.Student })
 			const student: IStudent = await StudentModel.create({ UserID: newUser._id })
 
-			return res.status(200).json({ message: "Student created", newUser })
+			return res.status(200).json({ message: "Student created", student })
 
 		} catch (error) {
 			next(error)
