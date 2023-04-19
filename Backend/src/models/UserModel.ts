@@ -8,10 +8,17 @@ export enum GenderEnum {
 	Female = "female"
 }
 
+enum roleEnum{
+	Student = "Student",
+	Teacher = "Teacher",
+	Admin = "Adminstrator"
+}
+
 export interface IUser extends Document {
-	Username: string
+	ID: string
 	Email: string
 	Password: string
+	role : roleEnum
 
 	ComparePassword: (password: string) => Promise<boolean>
 	GenerateToken: () => string
@@ -24,7 +31,7 @@ interface UserModel extends Model<IUser> {
 
 const UserSchema: Schema<IUser> = new Schema(
 	{
-		Username: {
+		ID: {
 			type: String,
 			required: true,
 			unique: true
@@ -37,6 +44,10 @@ const UserSchema: Schema<IUser> = new Schema(
 		Password: {
 			type: String,
 			required: true
+		},
+		role:{
+			type : String,
+			required : true
 		}
 	},
 	{

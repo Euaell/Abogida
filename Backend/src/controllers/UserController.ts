@@ -108,7 +108,7 @@ export default class UserController {
 
 			const user: IUser | null = await User.findById(id)
 			if (user) {
-				if (Username) user.Username = Username
+				if (Username) user.ID = Username
 				if (Email) user.Email = Email
 				if (Password) user.Password = Password
 
