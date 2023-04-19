@@ -21,6 +21,7 @@ app.use(cors({
 
 app.use("/api/v1/users", routes.UserRoute)
 app.use("/api/v1/unverified-users", routes.UnverifiedUserRoute)
+app.use("/api/v1/classes", routes.ClassRoute)
 
 app.get("/api/v1", (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({ message: "Chatty Chat!" })

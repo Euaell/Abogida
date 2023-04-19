@@ -1,8 +1,11 @@
-import { Schema, model, Document } from "mongoose";
+import {Schema, model, Document, Model} from "mongoose";
 
-export interface ITeacher extends Document{
-
+export interface ITeacher extends Document {
     Uid : Schema.Types.ObjectId
+}
+
+interface TeacherModel extends Model<ITeacher> {
+
 }
 
 const TeacherSchema : Schema <ITeacher> = new Schema<ITeacher>({
@@ -16,4 +19,4 @@ const TeacherSchema : Schema <ITeacher> = new Schema<ITeacher>({
 
 })
 
-export default model<ITeacher>("Teacher",TeacherSchema);
+export default model<ITeacher, TeacherModel>("Teacher",TeacherSchema);
