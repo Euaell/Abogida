@@ -61,6 +61,8 @@ export default class ClassController {
 	public static async CreateClass(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
 			const { ClassName } = req.body
+			if (!ClassName || await ClassModel.findOne({ ClassName }))
+				return res.status(400).json({ message: "Invalid Class Name" })
 
 			const Class: IClass = await ClassModel.create({ClassName})
 			return res.status(200).json({ Class })

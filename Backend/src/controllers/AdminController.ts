@@ -3,6 +3,7 @@ import AdminModel, { IAdmin } from "../models/AdminModel";
 import UserModel, { IUser, roleEnum } from "../models/UserModel";
 import TeacherModel, {ITeacher} from "../models/TeacherModel";
 import StudentModel, {IStudent} from "../models/StudentModel";
+import ClassModel, {IClass} from "../models/ClassModel";
 
 export class AdminController {
 	public static async GetAdmins(req: Request, res: Response, next: NextFunction): Promise<Response> {
@@ -93,13 +94,17 @@ export class AdminController {
 
 	public static async CreateStudent(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
-			const { ID, Name, Password } = req.body
+			const { ID, Name, Password, ClassName } = req.body
+
+			const studClass: IClass = await ClassModel.findOne({ ClassName })
+			if (!studClass)
+				return res.status(404).json({ message: "Class not found" })
 
 			if (await UserModel.findOne({ ID }))
 				return res.status(400).json({ message: "User already exists" })
 
 			const newUser: IUser = await UserModel.create({ ID, Name, Password, role: roleEnum.Student })
-			const student: IStudent = await StudentModel.create({ UserID: newUser._id })
+			const student: IStudent = await StudentModel.create({ UserID: newUser._id, Class: studClass._id })
 
 			return res.status(200).json({ message: "Student created", student })
 

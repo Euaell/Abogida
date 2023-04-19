@@ -37,4 +37,17 @@ export default class Authenticate {
 			next(error)
 		}
 	}
+
+	public static async authorizeTeacher( req: Request, res: Response, next: NextFunction ): Promise<void> {
+		try {
+			const { user } = req.body
+			if (user.role === roleEnum.Teacher) {
+				next()
+			} else {
+				throw new Error("Unauthorized")
+			}
+		} catch (error) {
+			next(error)
+		}
+	}
 }

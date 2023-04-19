@@ -1,7 +1,7 @@
 import {Schema, model, Document, Model} from "mongoose";
 
 export interface ITeacher extends Document {
-    Uid : Schema.Types.ObjectId
+    UserID : Schema.Types.ObjectId
 }
 
 interface TeacherModel extends Model<ITeacher> {
@@ -9,7 +9,7 @@ interface TeacherModel extends Model<ITeacher> {
 }
 
 const TeacherSchema : Schema <ITeacher> = new Schema<ITeacher>({
-    Uid : {
+    UserID : {
         type : Schema.Types.ObjectId,
         required : true,
         ref : "User",

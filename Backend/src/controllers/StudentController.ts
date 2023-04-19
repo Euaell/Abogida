@@ -5,7 +5,7 @@ import GradeModel from "../models/GradeModel";
 export default class StudentController {
     public static async GetStudents(req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
-            const students = await StudentModel.find().populate("UserID", "-Password")
+            const students = await StudentModel.find().populate("UserID", "-Password").populate("Class", "ClassName")
             return res.status(200).json({ students })
         } catch (error) {
             next(error)

@@ -12,7 +12,8 @@ const SubjectSchema : Schema <ISubject> = new Schema<ISubject>(
 	{
 		Name : {
 			type : String,
-			required : true
+			required : true,
+			unique : true
 		}
 	},
 	{
